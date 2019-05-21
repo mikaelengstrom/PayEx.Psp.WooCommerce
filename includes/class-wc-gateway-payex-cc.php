@@ -718,13 +718,7 @@ class WC_Gateway_Payex_Cc extends WC_Payment_Gateway_Payex
 			$this->log( sprintf( 'Incoming Callback: %s', $e->getMessage() ) );
 		}
 
-		// Process queue
-		sleep(10);
-		wp_cache_delete( 'payex_enqueue', 'transient' );
-		if ( false === get_transient( 'payex_enqueue' ) ) {
-			set_transient( 'payex_enqueue', true, MINUTE_IN_SECONDS * 5 );
-			WC_Payex_Psp::process_queue();
-		}
+        WC_Payex_Psp::process_queue();
 	}
 
 	/**
